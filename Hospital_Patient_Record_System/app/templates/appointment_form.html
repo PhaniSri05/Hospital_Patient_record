@@ -1,0 +1,717 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       FORM PAGE
+    ============================== */
+
+    .form-page {
+        max-width: 900px;
+        margin: 10px auto 40px;
+    }
+
+
+    /* ==============================
+       HEADER
+    ============================== */
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .form-header-icon {
+        width: 52px;
+        height: 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #fff3df;
+        color: #f59f00;
+
+        border-radius: 13px;
+
+        font-size: 1.45rem;
+    }
+
+
+    .form-header h2 {
+        margin: 0;
+
+        color: #172033;
+
+        font-weight: 700;
+    }
+
+
+    .form-header p {
+        margin: 4px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* ==============================
+       FORM CARD
+    ============================== */
+
+    .form-card {
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        border: 1px solid #edf1f5;
+
+        box-shadow:
+            0 8px 25px rgba(15, 23, 42, 0.06);
+    }
+
+
+    .form-card-title {
+        font-size: 1.1rem;
+
+        font-weight: 700;
+
+        color: #263238;
+
+        padding-bottom: 18px;
+
+        margin-bottom: 25px;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    /* ==============================
+       INFO BOX
+    ============================== */
+
+    .form-info {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: #fff9ed;
+
+        border: 1px solid #ffe6b3;
+
+        color: #475569;
+
+        padding: 13px 15px;
+
+        border-radius: 9px;
+
+        margin-bottom: 25px;
+
+        font-size: 0.85rem;
+    }
+
+
+    .form-info i {
+        color: #f59f00;
+
+        margin-top: 2px;
+    }
+
+
+    /* ==============================
+       FORM FIELDS
+    ============================== */
+
+    .field-group {
+        margin-bottom: 22px;
+    }
+
+
+    .form-label {
+        color: #334155;
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+    }
+
+
+    .input-wrapper {
+        position: relative;
+    }
+
+
+    .input-icon {
+        position: absolute;
+
+        left: 14px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #64748b;
+
+        z-index: 2;
+    }
+
+
+    .input-wrapper .form-control {
+        padding-left: 42px;
+    }
+
+
+    .form-control {
+        min-height: 48px;
+
+        border: 1px solid #dbe3ec;
+
+        border-radius: 9px;
+
+        color: #263238;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .form-control:focus {
+        border-color: #0d6efd;
+
+        box-shadow:
+            0 0 0 4px rgba(13, 110, 253, 0.10);
+    }
+
+
+    .form-control::placeholder {
+        color: #a0aaba;
+    }
+
+
+    /* ==============================
+       TWO COLUMN LAYOUT
+    ============================== */
+
+    .field-row {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 20px;
+    }
+
+
+    /* ==============================
+       STATUS COLORS
+    ============================== */
+
+    .status-select {
+        font-weight: 500;
+    }
+
+
+    /* ==============================
+       HELP TEXT
+    ============================== */
+
+    .field-help {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #94a3b8;
+
+        font-size: 0.78rem;
+    }
+
+
+    /* ==============================
+       FORM ACTIONS
+    ============================== */
+
+    .form-actions {
+        display: flex;
+
+        gap: 10px;
+
+        padding-top: 10px;
+
+        margin-top: 10px;
+
+        border-top: 1px solid #edf1f5;
+    }
+
+
+    .save-btn,
+    .cancel-btn {
+        min-height: 46px;
+
+        padding: 0 22px;
+
+        border-radius: 9px;
+
+        font-weight: 600;
+    }
+
+
+    .save-btn {
+        background: #0d6efd;
+
+        border-color: #0d6efd;
+
+        box-shadow:
+            0 5px 12px rgba(13, 110, 253, 0.15);
+    }
+
+
+    .save-btn:hover {
+        background: #0b5ed7;
+
+        border-color: #0a58ca;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 700px) {
+
+        .field-row {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 576px) {
+
+        .form-card {
+            padding: 22px;
+        }
+
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+
+        .save-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<div class="form-page">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="form-header">
+
+        <div class="form-header-icon">
+
+            <i class="bi bi-calendar-plus-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+
+                {% if appointment %}
+
+                    Edit Appointment
+
+                {% else %}
+
+                    Schedule Appointment
+
+                {% endif %}
+
+            </h2>
+
+
+            <p>
+
+                {% if appointment %}
+
+                    Update appointment and treatment information
+
+                {% else %}
+
+                    Schedule a new patient appointment
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         FORM CARD
+    ============================== -->
+
+    <div class="form-card">
+
+
+        <div class="form-card-title">
+
+            <i class="bi bi-calendar2-check-fill text-primary me-2"></i>
+
+            Appointment Information
+
+        </div>
+
+
+        <!-- Information box -->
+
+        <div class="form-info">
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            <span>
+                Please enter accurate appointment and treatment information.
+                Fields marked as required must be completed.
+            </span>
+
+        </div>
+
+
+        <form method="POST">
+
+
+            <!-- ==========================
+                 PATIENT + DOCTOR
+            =========================== -->
+
+            <div class="field-row">
+
+
+                <!-- PATIENT -->
+
+                <div class="field-group">
+
+                    <label class="form-label">
+                        Patient
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-person-fill input-icon"></i>
+
+
+                        <select
+                            name="patient_id"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select Patient
+                            </option>
+
+
+                            {% for patient in patients %}
+
+                            <option
+                                value="{{ patient.id }}"
+                                {% if appointment and appointment.patient_id == patient.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ patient.name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOCTOR -->
+
+                <div class="field-group">
+
+                    <label class="form-label">
+                        Doctor
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-person-badge-fill input-icon"></i>
+
+
+                        <select
+                            name="doctor_id"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select Doctor
+                            </option>
+
+
+                            {% for doctor in doctors %}
+
+                            <option
+                                value="{{ doctor.id }}"
+                                {% if appointment and appointment.doctor_id == doctor.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ doctor.name }} -
+                                {{ doctor.specialization }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 DATE + STATUS
+            =========================== -->
+
+            <div class="field-row">
+
+
+                <!-- DATE -->
+
+                <div class="field-group">
+
+                    <label class="form-label">
+                        Appointment Date
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-calendar3 input-icon"></i>
+
+
+                        <input
+                            type="date"
+                            name="date"
+                            class="form-control"
+                            value="{{ appointment.date if appointment else '' }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="field-group">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-activity input-icon"></i>
+
+
+                        <select
+                            name="status"
+                            class="form-control status-select"
+                            required
+                        >
+
+                            {% for status in [
+                                "Under Treatment",
+                                "Recovered",
+                                "Critical"
+                            ] %}
+
+                            <option
+                                value="{{ status }}"
+                                {% if appointment and appointment.status == status %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ status }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 DIAGNOSIS
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Diagnosis
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-heart-pulse-fill input-icon"></i>
+
+
+                    <input
+                        type="text"
+                        name="diagnosis"
+                        class="form-control"
+                        placeholder="Enter diagnosis"
+                        value="{{ appointment.diagnosis if appointment else '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <span class="field-help">
+
+                    <i class="bi bi-info-circle me-1"></i>
+
+                    Enter the patient's diagnosis or treatment reason.
+
+                </span>
+
+            </div>
+
+
+            <!-- ==========================
+                 RECOVERY DATE
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Recovery Date
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-calendar-check input-icon"></i>
+
+
+                    <input
+                        type="date"
+                        name="recovery_date"
+                        class="form-control"
+                        value="{{ appointment.recovery_date if appointment and appointment.recovery_date else '' }}"
+                    >
+
+                </div>
+
+
+                <span class="field-help">
+
+                    <i class="bi bi-shield-check me-1"></i>
+
+                    Leave blank if the patient has not recovered yet.
+
+                </span>
+
+            </div>
+
+
+            <!-- ==========================
+                 ACTIONS
+            =========================== -->
+
+            <div class="form-actions">
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary save-btn"
+                >
+
+                    {% if appointment %}
+
+                        <i class="bi bi-check-circle-fill me-2"></i>
+
+                        Update Appointment
+
+                    {% else %}
+
+                        <i class="bi bi-calendar-plus-fill me-2"></i>
+
+                        Schedule Appointment
+
+                    {% endif %}
+
+                </button>
+
+
+                <a
+                    href="/appointments"
+                    class="btn btn-outline-secondary cancel-btn"
+                >
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

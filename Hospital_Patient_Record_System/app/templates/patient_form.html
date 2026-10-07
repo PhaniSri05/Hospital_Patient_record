@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       FORM PAGE
+    ============================== */
+
+    .form-page {
+        max-width: 850px;
+        margin: 10px auto 40px;
+    }
+
+
+    /* ==============================
+       HEADER
+    ============================== */
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+
+    .form-header-icon {
+        width: 52px;
+        height: 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e8f1ff;
+        color: #0d6efd;
+
+        border-radius: 13px;
+
+        font-size: 1.45rem;
+    }
+
+
+    .form-header h2 {
+        margin: 0;
+
+        color: #172033;
+
+        font-weight: 700;
+    }
+
+
+    .form-header p {
+        margin: 4px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* ==============================
+       FORM CARD
+    ============================== */
+
+    .form-card {
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        border: 1px solid #edf1f5;
+
+        box-shadow:
+            0 8px 25px rgba(15, 23, 42, 0.06);
+    }
+
+
+    .form-card-title {
+        font-size: 1.1rem;
+
+        font-weight: 700;
+
+        color: #263238;
+
+        padding-bottom: 18px;
+
+        margin-bottom: 25px;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    /* ==============================
+       FORM FIELDS
+    ============================== */
+
+    .field-group {
+        margin-bottom: 22px;
+    }
+
+
+    .form-label {
+        color: #334155;
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+    }
+
+
+    .input-wrapper {
+        position: relative;
+    }
+
+
+    .input-icon {
+        position: absolute;
+
+        left: 14px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #64748b;
+
+        z-index: 2;
+    }
+
+
+    .input-wrapper .form-control,
+    .input-wrapper .form-select {
+        padding-left: 42px;
+    }
+
+
+    .form-control,
+    .form-select {
+        min-height: 48px;
+
+        border: 1px solid #dbe3ec;
+
+        border-radius: 9px;
+
+        color: #263238;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #0d6efd;
+
+        box-shadow:
+            0 0 0 4px rgba(13, 110, 253, 0.10);
+    }
+
+
+    .form-control::placeholder {
+        color: #a0aaba;
+    }
+
+
+    /* ==============================
+       FIELD HELP
+    ============================== */
+
+    .field-help {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #94a3b8;
+
+        font-size: 0.78rem;
+    }
+
+
+    /* ==============================
+       FORM ACTIONS
+    ============================== */
+
+    .form-actions {
+        display: flex;
+
+        gap: 10px;
+
+        padding-top: 10px;
+
+        margin-top: 10px;
+
+        border-top: 1px solid #edf1f5;
+    }
+
+
+    .save-btn,
+    .cancel-btn {
+        min-height: 46px;
+
+        padding: 0 22px;
+
+        border-radius: 9px;
+
+        font-weight: 600;
+    }
+
+
+    .save-btn {
+        box-shadow:
+            0 5px 12px rgba(13, 110, 253, 0.15);
+    }
+
+
+    /* ==============================
+       INFO BOX
+    ============================== */
+
+    .form-info {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: #f0f7ff;
+
+        border: 1px solid #d9ebff;
+
+        color: #475569;
+
+        padding: 13px 15px;
+
+        border-radius: 9px;
+
+        margin-bottom: 25px;
+
+        font-size: 0.85rem;
+    }
+
+
+    .form-info i {
+        color: #0d6efd;
+
+        margin-top: 2px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 576px) {
+
+        .form-card {
+            padding: 22px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<div class="form-page">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="form-header">
+
+        <div class="form-header-icon">
+
+            <i class="bi bi-person-vcard-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+
+                {% if patient %}
+
+                    Edit Patient
+
+                {% else %}
+
+                    Add New Patient
+
+                {% endif %}
+
+            </h2>
+
+
+            <p>
+
+                {% if patient %}
+
+                    Update the patient's registered information
+
+                {% else %}
+
+                    Register a new patient in the hospital system
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         FORM CARD
+    ============================== -->
+
+    <div class="form-card">
+
+
+        <div class="form-card-title">
+
+            <i class="bi bi-person-lines-fill text-primary me-2"></i>
+
+            Patient Information
+
+        </div>
+
+
+        <!-- Information -->
+
+        <div class="form-info">
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            <span>
+                Please enter accurate patient information.
+                Fields marked as required must be completed.
+            </span>
+
+        </div>
+
+
+        <form method="POST">
+
+
+            <!-- ==========================
+                 NAME
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Patient Name
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-person input-icon"></i>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter patient's full name"
+                        value="{{ patient.name if patient else '' }}"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 AGE
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Age
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-calendar3 input-icon"></i>
+
+                    <input
+                        type="number"
+                        name="age"
+                        class="form-control"
+                        placeholder="Enter patient's age"
+                        min="0"
+                        value="{{ patient.age if patient else '' }}"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 GENDER
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Gender
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-gender-ambiguous input-icon"></i>
+
+                    <select
+                        name="gender"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+
+                        <option
+                            value="Male"
+                            {% if patient and patient.gender == "Male" %}selected{% endif %}
+                        >
+                            Male
+                        </option>
+
+
+                        <option
+                            value="Female"
+                            {% if patient and patient.gender == "Female" %}selected{% endif %}
+                        >
+                            Female
+                        </option>
+
+
+                        <option
+                            value="Other"
+                            {% if patient and patient.gender == "Other" %}selected{% endif %}
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 CONTACT
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Contact Number
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-telephone input-icon"></i>
+
+                    <input
+                        type="text"
+                        name="contact"
+                        class="form-control"
+                        placeholder="Enter contact number"
+                        value="{{ patient.contact if patient else '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <span class="field-help">
+
+                    <i class="bi bi-shield-check me-1"></i>
+
+                    Contact information is used for patient records.
+
+                </span>
+
+            </div>
+
+
+            <!-- ==========================
+                 ACTIONS
+            =========================== -->
+
+            <div class="form-actions">
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary save-btn"
+                >
+
+                    {% if patient %}
+
+                        <i class="bi bi-check-circle-fill me-2"></i>
+
+                        Update Patient
+
+                    {% else %}
+
+                        <i class="bi bi-person-plus-fill me-2"></i>
+
+                        Add Patient
+
+                    {% endif %}
+
+                </button>
+
+
+                <a
+                    href="/patients"
+                    class="btn btn-outline-secondary cancel-btn"
+                >
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,575 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       DASHBOARD HEADER
+    ============================== */
+
+    .dashboard-header {
+        background: linear-gradient(
+            135deg,
+            #0d6efd,
+            #084298
+        );
+
+        color: white;
+
+        border-radius: 18px;
+
+        padding: 35px 40px;
+
+        margin-bottom: 30px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 10px 30px rgba(13, 110, 253, 0.18);
+    }
+
+
+    .dashboard-header::after {
+        content: "";
+
+        position: absolute;
+
+        width: 260px;
+        height: 260px;
+
+        border-radius: 50%;
+
+        background: rgba(255,255,255,0.08);
+
+        right: -80px;
+        top: -120px;
+    }
+
+
+    .dashboard-header h1 {
+        font-size: 2rem;
+
+        font-weight: 700;
+
+        margin-bottom: 8px;
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+
+    .dashboard-header p {
+        margin: 0;
+
+        color: rgba(255,255,255,0.85);
+
+        font-size: 1rem;
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+
+    .dashboard-icon {
+        position: absolute;
+
+        right: 45px;
+        bottom: 25px;
+
+        font-size: 5rem;
+
+        opacity: 0.13;
+
+        z-index: 1;
+    }
+
+
+    /* ==============================
+       MANAGEMENT CARDS
+    ============================== */
+
+    .management-card {
+        background: white;
+
+        border: none;
+
+        border-radius: 16px;
+
+        padding: 28px;
+
+        height: 100%;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.06);
+
+        transition: all 0.25s ease;
+
+        position: relative;
+
+        overflow: hidden;
+    }
+
+
+    .management-card:hover {
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 12px 30px rgba(15, 23, 42, 0.11);
+    }
+
+
+    .card-icon {
+        width: 58px;
+        height: 58px;
+
+        border-radius: 14px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 1.7rem;
+
+        margin-bottom: 20px;
+    }
+
+
+    .patient-icon {
+        background: #e8f1ff;
+        color: #0d6efd;
+    }
+
+
+    .doctor-icon {
+        background: #e9f8f0;
+        color: #198754;
+    }
+
+
+    .appointment-icon {
+        background: #fff3df;
+        color: #f59f00;
+    }
+
+
+    .management-card h3 {
+        font-size: 1.25rem;
+
+        font-weight: 700;
+
+        color: #172033;
+
+        margin-bottom: 10px;
+    }
+
+
+    .management-card p {
+        color: #718096;
+
+        font-size: 0.92rem;
+
+        line-height: 1.6;
+
+        min-height: 48px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .dashboard-button {
+        border-radius: 9px;
+
+        font-weight: 600;
+
+        padding: 10px 18px;
+    }
+
+
+    /* ==============================
+       QUICK ACCESS
+    ============================== */
+
+    .quick-section {
+        margin-top: 32px;
+    }
+
+
+    .section-title {
+        font-size: 1.2rem;
+
+        font-weight: 700;
+
+        color: #172033;
+
+        margin-bottom: 18px;
+    }
+
+
+    .quick-card {
+        background: white;
+
+        border-radius: 14px;
+
+        padding: 20px;
+
+        border: 1px solid #edf1f5;
+
+        display: flex;
+
+        align-items: center;
+
+        text-decoration: none;
+
+        color: inherit;
+
+        transition: all 0.2s ease;
+
+        height: 100%;
+    }
+
+
+    .quick-card:hover {
+        border-color: #cfe2ff;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px rgba(15, 23, 42, 0.06);
+
+        color: inherit;
+    }
+
+
+    .quick-icon {
+        width: 45px;
+        height: 45px;
+
+        border-radius: 11px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #eef5ff;
+
+        color: #0d6efd;
+
+        font-size: 1.2rem;
+
+        margin-right: 14px;
+    }
+
+
+    .quick-card h6 {
+        margin: 0 0 3px;
+
+        font-weight: 600;
+
+        color: #263238;
+    }
+
+
+    .quick-card small {
+        color: #8995a5;
+    }
+
+
+    .quick-arrow {
+        margin-left: auto;
+
+        color: #94a3b8;
+    }
+
+
+    /* ==============================
+       FOOTER MESSAGE
+    ============================== */
+
+    .dashboard-footer {
+        margin-top: 35px;
+
+        padding: 18px;
+
+        text-align: center;
+
+        background: #f8fafc;
+
+        border-radius: 12px;
+
+        color: #64748b;
+
+        font-size: 0.88rem;
+    }
+
+</style>
+
+
+<!-- ==============================
+     WELCOME HEADER
+============================== -->
+
+<div class="dashboard-header">
+
+    <i class="bi bi-hospital dashboard-icon"></i>
+
+    <h1>
+        Welcome to MediCare Hospital 👋
+    </h1>
+
+    <p>
+        Hospital Patient Record and Treatment Management Dashboard
+    </p>
+
+</div>
+
+
+<!-- ==============================
+     MANAGEMENT CARDS
+============================== -->
+
+<div class="row g-4">
+
+
+    <!-- Patients -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="management-card">
+
+            <div class="card-icon patient-icon">
+
+                <i class="bi bi-people-fill"></i>
+
+            </div>
+
+
+            <h3>
+                Patients
+            </h3>
+
+
+            <p>
+                Manage patient records, personal details,
+                contact information and treatment history.
+            </p>
+
+
+            <a
+                href="/patients"
+                class="btn btn-primary dashboard-button"
+            >
+
+                <i class="bi bi-arrow-right-circle me-2"></i>
+
+                View Patients
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Doctors -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="management-card">
+
+            <div class="card-icon doctor-icon">
+
+                <i class="bi bi-person-badge-fill"></i>
+
+            </div>
+
+
+            <h3>
+                Doctors
+            </h3>
+
+
+            <p>
+                Manage doctors, specializations and
+                healthcare professionals.
+            </p>
+
+
+            <a
+                href="/doctors"
+                class="btn btn-success dashboard-button"
+            >
+
+                <i class="bi bi-arrow-right-circle me-2"></i>
+
+                View Doctors
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Appointments -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="management-card">
+
+            <div class="card-icon appointment-icon">
+
+                <i class="bi bi-calendar-check-fill"></i>
+
+            </div>
+
+
+            <h3>
+                Appointments
+            </h3>
+
+
+            <p>
+                Schedule appointments and track diagnosis
+                and treatment status.
+            </p>
+
+
+            <a
+                href="/appointments"
+                class="btn btn-warning dashboard-button"
+            >
+
+                <i class="bi bi-arrow-right-circle me-2"></i>
+
+                View Appointments
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     QUICK ACCESS
+============================== -->
+
+<div class="quick-section">
+
+    <div class="section-title">
+
+        <i class="bi bi-lightning-charge-fill text-warning me-2"></i>
+
+        Quick Access
+
+    </div>
+
+
+    <div class="row g-3">
+
+
+        <!-- Analytics -->
+
+        <div class="col-md-6">
+
+            <a
+                href="/analytics"
+                class="quick-card"
+            >
+
+                <div class="quick-icon">
+
+                    <i class="bi bi-bar-chart-fill"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h6>
+                        Analytics Dashboard
+                    </h6>
+
+                    <small>
+                        View treatment and hospital performance analytics
+                    </small>
+
+                </div>
+
+
+                <i class="bi bi-chevron-right quick-arrow"></i>
+
+            </a>
+
+        </div>
+
+
+        <!-- Reports -->
+
+        <div class="col-md-6">
+
+            <a
+                href="/reports"
+                class="quick-card"
+            >
+
+                <div class="quick-icon">
+
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h6>
+                        Reports & Data
+                    </h6>
+
+                    <small>
+                        Upload CSV and download hospital reports
+                    </small>
+
+                </div>
+
+
+                <i class="bi bi-chevron-right quick-arrow"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     FOOTER
+============================== -->
+
+<div class="dashboard-footer">
+
+    <i class="bi bi-shield-check text-success me-1"></i>
+
+    Secure Hospital Management System
+
+    <span class="mx-2">•</span>
+
+    Patient records and treatment tracking
+
+</div>
+
+
+{% endblock %}

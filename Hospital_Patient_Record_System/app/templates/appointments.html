@@ -1,0 +1,827 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       PAGE HEADER
+    ============================== */
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 25px;
+    }
+
+
+    .page-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+
+    .page-title-icon {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: #fff3df;
+        color: #f59f00;
+
+        font-size: 1.35rem;
+    }
+
+
+    .page-title h2 {
+        margin: 0;
+
+        font-weight: 700;
+
+        color: #172033;
+    }
+
+
+    .page-title p {
+        margin: 3px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.9rem;
+    }
+
+
+    .schedule-btn {
+        border-radius: 9px;
+
+        padding: 10px 18px;
+
+        font-weight: 600;
+
+        background: #0d6efd;
+
+        border-color: #0d6efd;
+
+        box-shadow:
+            0 5px 12px rgba(13, 110, 253, 0.15);
+    }
+
+
+    /* ==============================
+       SUMMARY
+    ============================== */
+
+    .appointment-summary {
+        background: white;
+
+        border-radius: 14px;
+
+        padding: 18px 22px;
+
+        margin-bottom: 20px;
+
+        border: 1px solid #edf1f5;
+
+        display: flex;
+        align-items: center;
+    }
+
+
+    .summary-icon {
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #fff3df;
+
+        color: #f59f00;
+
+        border-radius: 10px;
+
+        margin-right: 13px;
+    }
+
+
+    .summary-text strong {
+        display: block;
+
+        font-size: 1.05rem;
+
+        color: #172033;
+    }
+
+
+    .summary-text span {
+        color: #8995a5;
+
+        font-size: 0.85rem;
+    }
+
+
+    /* ==============================
+       TABLE CARD
+    ============================== */
+
+    .table-card {
+        background: white;
+
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.06);
+
+        border: 1px solid #edf1f5;
+    }
+
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+
+    .appointment-table {
+        margin: 0;
+
+        border: none;
+
+        min-width: 1050px;
+    }
+
+
+    .appointment-table thead th {
+        background: #f5f8fc;
+
+        color: #475569;
+
+        font-size: 0.78rem;
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.3px;
+
+        padding: 16px 15px;
+
+        border-bottom: 1px solid #e5eaf0;
+
+        white-space: nowrap;
+    }
+
+
+    .appointment-table tbody td {
+        padding: 16px 15px;
+
+        vertical-align: middle;
+
+        color: #475569;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    .appointment-table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+
+    .appointment-table tbody tr:hover {
+        background: #fffdf8;
+    }
+
+
+    .appointment-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* ==============================
+       APPOINTMENT ID
+    ============================== */
+
+    .appointment-id {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-width: 38px;
+        height: 30px;
+
+        padding: 0 9px;
+
+        background: #fff3df;
+
+        color: #d97706;
+
+        border-radius: 8px;
+
+        font-weight: 700;
+
+        font-size: 0.82rem;
+    }
+
+
+    /* ==============================
+       PATIENT / DOCTOR
+    ============================== */
+
+    .person-cell {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        font-weight: 600;
+
+        color: #263238;
+
+        white-space: nowrap;
+    }
+
+
+    .person-avatar {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #eef5ff;
+
+        color: #0d6efd;
+
+        font-size: 0.8rem;
+
+        font-weight: 700;
+    }
+
+
+    .doctor-avatar {
+        background: #e9f8f0;
+
+        color: #198754;
+    }
+
+
+    /* ==============================
+       DATE
+    ============================== */
+
+    .date-cell {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        white-space: nowrap;
+
+        color: #475569;
+
+        font-size: 0.88rem;
+    }
+
+
+    .date-cell i {
+        color: #0d6efd;
+    }
+
+
+    /* ==============================
+       DIAGNOSIS
+    ============================== */
+
+    .diagnosis-cell {
+        max-width: 220px;
+
+        color: #475569;
+
+        font-size: 0.88rem;
+    }
+
+
+    /* ==============================
+       STATUS BADGES
+    ============================== */
+
+    .status-badge {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        padding: 6px 10px;
+
+        border-radius: 20px;
+
+        font-size: 0.78rem;
+
+        font-weight: 600;
+
+        white-space: nowrap;
+    }
+
+
+    .status-recovered {
+        background: #e9f8f0;
+
+        color: #198754;
+    }
+
+
+    .status-treatment {
+        background: #fff3df;
+
+        color: #b45309;
+    }
+
+
+    .status-critical {
+        background: #fdecec;
+
+        color: #dc3545;
+    }
+
+
+    .status-default {
+        background: #f1f5f9;
+
+        color: #475569;
+    }
+
+
+    /* ==============================
+       RECOVERY DATE
+    ============================== */
+
+    .recovery-date {
+        color: #64748b;
+
+        font-size: 0.85rem;
+
+        white-space: nowrap;
+    }
+
+
+    .no-date {
+        color: #a0aaba;
+
+        font-style: italic;
+    }
+
+
+    /* ==============================
+       ACTION BUTTONS
+    ============================== */
+
+    .action-btn {
+        border-radius: 7px;
+
+        font-size: 0.78rem;
+
+        font-weight: 600;
+
+        padding: 6px 9px;
+
+        margin-right: 3px;
+
+        white-space: nowrap;
+    }
+
+
+    /* ==============================
+       EMPTY STATE
+    ============================== */
+
+    .empty-state {
+        padding: 60px 20px !important;
+
+        text-align: center;
+
+        color: #8995a5;
+    }
+
+
+    .empty-icon {
+        width: 65px;
+        height: 65px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 auto 15px;
+
+        background: #f1f5f9;
+
+        color: #94a3b8;
+
+        border-radius: 50%;
+
+        font-size: 1.7rem;
+    }
+
+
+    .empty-state strong {
+        display: block;
+
+        color: #475569;
+
+        font-size: 1rem;
+
+        margin-bottom: 5px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        .page-header {
+            align-items: flex-start;
+
+            gap: 15px;
+
+            flex-direction: column;
+        }
+
+
+        .schedule-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<!-- ==============================
+     PAGE HEADER
+============================== -->
+
+<div class="page-header">
+
+    <div class="page-title">
+
+        <div class="page-title-icon">
+
+            <i class="bi bi-calendar-check-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Appointments
+            </h2>
+
+            <p>
+                Schedule and manage patient appointments and treatments
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/appointments/new"
+        class="btn btn-primary schedule-btn"
+    >
+
+        <i class="bi bi-calendar-plus-fill me-2"></i>
+
+        Schedule Appointment
+
+    </a>
+
+</div>
+
+
+<!-- ==============================
+     SUMMARY
+============================== -->
+
+<div class="appointment-summary">
+
+    <div class="summary-icon">
+
+        <i class="bi bi-calendar2-check-fill"></i>
+
+    </div>
+
+
+    <div class="summary-text">
+
+        <strong>
+            Appointment Records
+        </strong>
+
+        <span>
+            View scheduled visits, diagnoses and treatment status
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     APPOINTMENT TABLE
+============================== -->
+
+<div class="table-card">
+
+    <div class="table-responsive">
+
+        <table class="table appointment-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Patient</th>
+
+                    <th>Doctor</th>
+
+                    <th>Date</th>
+
+                    <th>Diagnosis</th>
+
+                    <th>Status</th>
+
+                    <th>Recovery Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for appointment in appointments %}
+
+                <tr>
+
+
+                    <!-- ID -->
+
+                    <td>
+
+                        <span class="appointment-id">
+
+                            #{{ appointment.id }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Patient -->
+
+                    <td>
+
+                        <div class="person-cell">
+
+                            <div class="person-avatar">
+
+                                {{ appointment.patient.name[0]|upper }}
+
+                            </div>
+
+                            {{ appointment.patient.name }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Doctor -->
+
+                    <td>
+
+                        <div class="person-cell">
+
+                            <div class="person-avatar doctor-avatar">
+
+                                {{ appointment.doctor.name[0]|upper }}
+
+                            </div>
+
+                            {{ appointment.doctor.name }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Date -->
+
+                    <td>
+
+                        <div class="date-cell">
+
+                            <i class="bi bi-calendar3"></i>
+
+                            {{ appointment.date }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Diagnosis -->
+
+                    <td>
+
+                        <div class="diagnosis-cell">
+
+                            {{ appointment.diagnosis }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        {% if appointment.status == "Recovered" %}
+
+                            <span class="status-badge status-recovered">
+
+                                <i class="bi bi-check-circle-fill"></i>
+
+                                Recovered
+
+                            </span>
+
+                        {% elif appointment.status == "Under Treatment" %}
+
+                            <span class="status-badge status-treatment">
+
+                                <i class="bi bi-clock-fill"></i>
+
+                                Under Treatment
+
+                            </span>
+
+                        {% elif appointment.status == "Critical" %}
+
+                            <span class="status-badge status-critical">
+
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                                Critical
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge status-default">
+
+                                {{ appointment.status }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Recovery Date -->
+
+                    <td>
+
+                        {% if appointment.recovery_date %}
+
+                            <span class="recovery-date">
+
+                                <i class="bi bi-calendar-check me-1 text-success"></i>
+
+                                {{ appointment.recovery_date }}
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="no-date">
+
+                                Not available
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <a
+                            href="/appointments/{{ appointment.id }}/edit"
+                            class="btn btn-sm btn-outline-primary action-btn"
+                        >
+
+                            <i class="bi bi-pencil-fill me-1"></i>
+
+                            Edit
+
+                        </a>
+
+
+                        <form
+                            method="POST"
+                            action="/appointments/{{ appointment.id }}/delete"
+                            style="display:inline;"
+                            onsubmit="return confirm('Delete this appointment?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-sm btn-outline-danger action-btn"
+                            >
+
+                                <i class="bi bi-trash3-fill me-1"></i>
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-state"
+                    >
+
+                        <div class="empty-icon">
+
+                            <i class="bi bi-calendar-x"></i>
+
+                        </div>
+
+                        <strong>
+                            No appointments found
+                        </strong>
+
+                        <span>
+                            Schedule an appointment to get started.
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

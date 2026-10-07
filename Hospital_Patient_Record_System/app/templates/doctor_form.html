@@ -1,0 +1,487 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       FORM PAGE
+    ============================== */
+
+    .form-page {
+        max-width: 850px;
+        margin: 10px auto 40px;
+    }
+
+
+    /* ==============================
+       HEADER
+    ============================== */
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+
+    .form-header-icon {
+        width: 52px;
+        height: 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e9f8f0;
+        color: #198754;
+
+        border-radius: 13px;
+
+        font-size: 1.45rem;
+    }
+
+
+    .form-header h2 {
+        margin: 0;
+
+        color: #172033;
+
+        font-weight: 700;
+    }
+
+
+    .form-header p {
+        margin: 4px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* ==============================
+       FORM CARD
+    ============================== */
+
+    .form-card {
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        border: 1px solid #edf1f5;
+
+        box-shadow:
+            0 8px 25px rgba(15, 23, 42, 0.06);
+    }
+
+
+    .form-card-title {
+        font-size: 1.1rem;
+
+        font-weight: 700;
+
+        color: #263238;
+
+        padding-bottom: 18px;
+
+        margin-bottom: 25px;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    /* ==============================
+       INFO BOX
+    ============================== */
+
+    .form-info {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: #f0faf5;
+
+        border: 1px solid #d9f0e3;
+
+        color: #475569;
+
+        padding: 13px 15px;
+
+        border-radius: 9px;
+
+        margin-bottom: 25px;
+
+        font-size: 0.85rem;
+    }
+
+
+    .form-info i {
+        color: #198754;
+
+        margin-top: 2px;
+    }
+
+
+    /* ==============================
+       FORM FIELDS
+    ============================== */
+
+    .field-group {
+        margin-bottom: 22px;
+    }
+
+
+    .form-label {
+        color: #334155;
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+    }
+
+
+    .input-wrapper {
+        position: relative;
+    }
+
+
+    .input-icon {
+        position: absolute;
+
+        left: 14px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #64748b;
+
+        z-index: 2;
+    }
+
+
+    .input-wrapper .form-control {
+        padding-left: 42px;
+    }
+
+
+    .form-control {
+        min-height: 48px;
+
+        border: 1px solid #dbe3ec;
+
+        border-radius: 9px;
+
+        color: #263238;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .form-control:focus {
+        border-color: #198754;
+
+        box-shadow:
+            0 0 0 4px rgba(25, 135, 84, 0.10);
+    }
+
+
+    .form-control::placeholder {
+        color: #a0aaba;
+    }
+
+
+    /* ==============================
+       HELP TEXT
+    ============================== */
+
+    .field-help {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #94a3b8;
+
+        font-size: 0.78rem;
+    }
+
+
+    /* ==============================
+       FORM ACTIONS
+    ============================== */
+
+    .form-actions {
+        display: flex;
+
+        gap: 10px;
+
+        padding-top: 10px;
+
+        margin-top: 10px;
+
+        border-top: 1px solid #edf1f5;
+    }
+
+
+    .save-btn,
+    .cancel-btn {
+        min-height: 46px;
+
+        padding: 0 22px;
+
+        border-radius: 9px;
+
+        font-weight: 600;
+    }
+
+
+    .save-btn {
+        background: #198754;
+
+        border-color: #198754;
+
+        box-shadow:
+            0 5px 12px rgba(25, 135, 84, 0.15);
+    }
+
+
+    .save-btn:hover {
+        background: #157347;
+
+        border-color: #157347;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 576px) {
+
+        .form-card {
+            padding: 22px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<div class="form-page">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="form-header">
+
+        <div class="form-header-icon">
+
+            <i class="bi bi-person-badge-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+
+                {% if doctor %}
+
+                    Edit Doctor
+
+                {% else %}
+
+                    Add New Doctor
+
+                {% endif %}
+
+            </h2>
+
+
+            <p>
+
+                {% if doctor %}
+
+                    Update the doctor's professional information
+
+                {% else %}
+
+                    Register a new doctor in the hospital system
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         FORM CARD
+    ============================== -->
+
+    <div class="form-card">
+
+
+        <div class="form-card-title">
+
+            <i class="bi bi-person-vcard-fill text-success me-2"></i>
+
+            Doctor Information
+
+        </div>
+
+
+        <!-- Information -->
+
+        <div class="form-info">
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            <span>
+                Please enter accurate doctor information.
+                All fields are required.
+            </span>
+
+        </div>
+
+
+        <form method="POST">
+
+
+            <!-- ==========================
+                 DOCTOR NAME
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Doctor Name
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-person-badge input-icon"></i>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter doctor's full name"
+                        value="{{ doctor.name if doctor else '' }}"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 SPECIALIZATION
+            =========================== -->
+
+            <div class="field-group">
+
+                <label class="form-label">
+                    Specialization
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-heart-pulse input-icon"></i>
+
+                    <input
+                        type="text"
+                        name="specialization"
+                        class="form-control"
+                        placeholder="e.g. Cardiology, Neurology"
+                        value="{{ doctor.specialization if doctor else '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <span class="field-help">
+
+                    <i class="bi bi-hospital me-1"></i>
+
+                    Enter the doctor's medical specialization.
+
+                </span>
+
+            </div>
+
+
+            <!-- ==========================
+                 ACTIONS
+            =========================== -->
+
+            <div class="form-actions">
+
+
+                <button
+                    type="submit"
+                    class="btn btn-success save-btn"
+                >
+
+                    {% if doctor %}
+
+                        <i class="bi bi-check-circle-fill me-2"></i>
+
+                        Update Doctor
+
+                    {% else %}
+
+                        <i class="bi bi-person-plus-fill me-2"></i>
+
+                        Add Doctor
+
+                    {% endif %}
+
+                </button>
+
+
+                <a
+                    href="/doctors"
+                    class="btn btn-outline-secondary cancel-btn"
+                >
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,627 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       PAGE HEADER
+    ============================== */
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 25px;
+    }
+
+
+    .page-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+
+    .page-title-icon {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: #e9f8f0;
+        color: #198754;
+
+        font-size: 1.35rem;
+    }
+
+
+    .page-title h2 {
+        margin: 0;
+
+        font-weight: 700;
+
+        color: #172033;
+    }
+
+
+    .page-title p {
+        margin: 3px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.9rem;
+    }
+
+
+    .add-doctor-btn {
+        border-radius: 9px;
+
+        padding: 10px 18px;
+
+        font-weight: 600;
+
+        background: #198754;
+
+        border-color: #198754;
+
+        box-shadow:
+            0 5px 12px rgba(25, 135, 84, 0.15);
+    }
+
+
+    .add-doctor-btn:hover {
+        background: #157347;
+        border-color: #157347;
+    }
+
+
+    /* ==============================
+       SUMMARY
+    ============================== */
+
+    .doctor-summary {
+        background: white;
+
+        border-radius: 14px;
+
+        padding: 18px 22px;
+
+        margin-bottom: 20px;
+
+        border: 1px solid #edf1f5;
+
+        display: flex;
+        align-items: center;
+    }
+
+
+    .summary-icon {
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        border-radius: 10px;
+
+        margin-right: 13px;
+    }
+
+
+    .summary-text strong {
+        display: block;
+
+        font-size: 1.05rem;
+
+        color: #172033;
+    }
+
+
+    .summary-text span {
+        color: #8995a5;
+
+        font-size: 0.85rem;
+    }
+
+
+    /* ==============================
+       TABLE
+    ============================== */
+
+    .table-card {
+        background: white;
+
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.06);
+
+        border: 1px solid #edf1f5;
+    }
+
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+
+    .doctor-table {
+        margin: 0;
+
+        border: none;
+    }
+
+
+    .doctor-table thead th {
+        background: #f5f8fc;
+
+        color: #475569;
+
+        font-size: 0.83rem;
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.3px;
+
+        padding: 16px 18px;
+
+        border-bottom: 1px solid #e5eaf0;
+
+        white-space: nowrap;
+    }
+
+
+    .doctor-table tbody td {
+        padding: 17px 18px;
+
+        vertical-align: middle;
+
+        color: #475569;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    .doctor-table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+
+    .doctor-table tbody tr:hover {
+        background: #f8fffb;
+    }
+
+
+    .doctor-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* ==============================
+       DOCTOR ID
+    ============================== */
+
+    .doctor-id {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-width: 38px;
+        height: 30px;
+
+        padding: 0 9px;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        border-radius: 8px;
+
+        font-weight: 700;
+
+        font-size: 0.85rem;
+    }
+
+
+    /* ==============================
+       DOCTOR NAME
+    ============================== */
+
+    .doctor-name {
+        display: flex;
+
+        align-items: center;
+
+        gap: 11px;
+
+        font-weight: 600;
+
+        color: #263238;
+    }
+
+
+    .doctor-avatar {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        font-weight: 700;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* ==============================
+       SPECIALIZATION
+    ============================== */
+
+    .specialization-badge {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        padding: 6px 11px;
+
+        border-radius: 20px;
+
+        background: #f0f7ff;
+
+        color: #2563eb;
+
+        font-size: 0.82rem;
+
+        font-weight: 600;
+    }
+
+
+    .specialization-badge i {
+        font-size: 0.75rem;
+    }
+
+
+    /* ==============================
+       ACTIONS
+    ============================== */
+
+    .action-btn {
+        border-radius: 7px;
+
+        font-size: 0.8rem;
+
+        font-weight: 600;
+
+        padding: 6px 10px;
+
+        margin-right: 4px;
+    }
+
+
+    /* ==============================
+       EMPTY STATE
+    ============================== */
+
+    .empty-state {
+        padding: 55px 20px !important;
+
+        text-align: center;
+
+        color: #8995a5;
+    }
+
+
+    .empty-icon {
+        width: 65px;
+        height: 65px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 auto 15px;
+
+        background: #f1f5f9;
+
+        color: #94a3b8;
+
+        border-radius: 50%;
+
+        font-size: 1.7rem;
+    }
+
+
+    .empty-state strong {
+        display: block;
+
+        color: #475569;
+
+        font-size: 1rem;
+
+        margin-bottom: 5px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        .page-header {
+            align-items: flex-start;
+
+            gap: 15px;
+
+            flex-direction: column;
+        }
+
+        .add-doctor-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<!-- ==============================
+     PAGE HEADER
+============================== -->
+
+<div class="page-header">
+
+    <div class="page-title">
+
+        <div class="page-title-icon">
+
+            <i class="bi bi-person-badge-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Doctors
+            </h2>
+
+            <p>
+                Manage doctors and healthcare specializations
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/doctors/new"
+        class="btn btn-success add-doctor-btn"
+    >
+
+        <i class="bi bi-person-plus-fill me-2"></i>
+
+        Add Doctor
+
+    </a>
+
+</div>
+
+
+<!-- ==============================
+     SUMMARY
+============================== -->
+
+<div class="doctor-summary">
+
+    <div class="summary-icon">
+
+        <i class="bi bi-person-badge-fill"></i>
+
+    </div>
+
+
+    <div class="summary-text">
+
+        <strong>
+            Doctor Directory
+        </strong>
+
+        <span>
+            View and manage registered healthcare professionals
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     DOCTOR TABLE
+============================== -->
+
+<div class="table-card">
+
+    <div class="table-responsive">
+
+        <table class="table doctor-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Doctor</th>
+
+                    <th>Specialization</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for doctor in doctors %}
+
+                <tr>
+
+
+                    <!-- ID -->
+
+                    <td>
+
+                        <span class="doctor-id">
+
+                            #{{ doctor.id }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Name -->
+
+                    <td>
+
+                        <div class="doctor-name">
+
+                            <div class="doctor-avatar">
+
+                                {{ doctor.name[0]|upper }}
+
+                            </div>
+
+                            {{ doctor.name }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Specialization -->
+
+                    <td>
+
+                        <span class="specialization-badge">
+
+                            <i class="bi bi-heart-pulse-fill"></i>
+
+                            {{ doctor.specialization }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <a
+                            href="/doctors/{{ doctor.id }}/edit"
+                            class="btn btn-sm btn-outline-success action-btn"
+                        >
+
+                            <i class="bi bi-pencil-fill me-1"></i>
+
+                            Edit
+
+                        </a>
+
+
+                        <form
+                            method="POST"
+                            action="/doctors/{{ doctor.id }}/delete"
+                            style="display:inline;"
+                            onsubmit="return confirm('Delete this doctor?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-sm btn-outline-danger action-btn"
+                            >
+
+                                <i class="bi bi-trash3-fill me-1"></i>
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="empty-state"
+                    >
+
+                        <div class="empty-icon">
+
+                            <i class="bi bi-person-badge"></i>
+
+                        </div>
+
+                        <strong>
+                            No doctors found
+                        </strong>
+
+                        <span>
+                            Add a doctor to get started.
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

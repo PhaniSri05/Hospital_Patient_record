@@ -1,0 +1,1285 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    /* ==============================
+       ANALYTICS PAGE
+    ============================== */
+
+    .analytics-page {
+        margin-bottom: 40px;
+    }
+
+
+    /* ==============================
+       PAGE HEADER
+    ============================== */
+
+    .analytics-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 28px;
+    }
+
+
+    .analytics-header-icon {
+        width: 54px;
+        height: 54px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #eef5ff;
+        color: #0d6efd;
+
+        border-radius: 14px;
+
+        font-size: 1.45rem;
+    }
+
+
+    .analytics-header h2 {
+        margin: 0;
+
+        color: #172033;
+
+        font-weight: 700;
+    }
+
+
+    .analytics-header p {
+        margin: 4px 0 0;
+
+        color: #7b8798;
+
+        font-size: 0.92rem;
+    }
+
+
+    /* ==============================
+       SUMMARY CARDS
+    ============================== */
+
+    .summary-card {
+        background: white;
+
+        border: 1px solid #edf1f5;
+
+        border-radius: 15px;
+
+        padding: 20px;
+
+        height: 100%;
+
+        box-shadow:
+            0 5px 18px rgba(15, 23, 42, 0.05);
+
+        transition: transform 0.2s ease,
+                    box-shadow 0.2s ease;
+    }
+
+
+    .summary-card:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+
+    .summary-card-inner {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+
+    .summary-icon {
+        width: 48px;
+        height: 48px;
+
+        min-width: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        font-size: 1.25rem;
+    }
+
+
+    .summary-icon.blue {
+        background: #eef5ff;
+        color: #0d6efd;
+    }
+
+
+    .summary-icon.green {
+        background: #e9f8f0;
+        color: #198754;
+    }
+
+
+    .summary-icon.orange {
+        background: #fff3df;
+        color: #f59f00;
+    }
+
+
+    .summary-icon.red {
+        background: #fdecec;
+        color: #dc3545;
+    }
+
+
+    .summary-label {
+        display: block;
+
+        color: #7b8798;
+
+        font-size: 0.82rem;
+
+        margin-bottom: 3px;
+    }
+
+
+    .summary-value {
+        display: block;
+
+        color: #172033;
+
+        font-size: 1.65rem;
+
+        font-weight: 700;
+
+        line-height: 1;
+    }
+
+
+    /* ==============================
+       CHART CARDS
+    ============================== */
+
+    .chart-card {
+        background: white;
+
+        border: 1px solid #edf1f5;
+
+        border-radius: 16px;
+
+        padding: 22px;
+
+        height: 100%;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.05);
+    }
+
+
+    .chart-header {
+        display: flex;
+
+        align-items: center;
+
+        gap: 11px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .chart-icon {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #eef5ff;
+
+        color: #0d6efd;
+
+        border-radius: 10px;
+    }
+
+
+    .chart-title {
+        margin: 0;
+
+        color: #172033;
+
+        font-size: 1.05rem;
+
+        font-weight: 700;
+    }
+
+
+    .chart-subtitle {
+        margin: 3px 0 0;
+
+        color: #94a3b8;
+
+        font-size: 0.78rem;
+    }
+
+
+    .chart-container {
+        position: relative;
+
+        height: 300px;
+    }
+
+
+    /* ==============================
+       DOCTOR PERFORMANCE
+    ============================== */
+
+    .performance-card {
+        background: white;
+
+        border: 1px solid #edf1f5;
+
+        border-radius: 16px;
+
+        padding: 22px;
+
+        margin-top: 24px;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.05);
+    }
+
+
+    .performance-header {
+        display: flex;
+
+        align-items: center;
+
+        gap: 11px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .performance-icon {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        border-radius: 10px;
+    }
+
+
+    .performance-title {
+        margin: 0;
+
+        color: #172033;
+
+        font-size: 1.05rem;
+
+        font-weight: 700;
+    }
+
+
+    .performance-subtitle {
+        margin: 3px 0 0;
+
+        color: #94a3b8;
+
+        font-size: 0.78rem;
+    }
+
+
+    .performance-table {
+        margin-bottom: 0;
+    }
+
+
+    .performance-table thead th {
+        background: #f5f8fc;
+
+        color: #475569;
+
+        font-size: 0.78rem;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.3px;
+
+        border-bottom: 1px solid #e5eaf0;
+
+        padding: 13px 15px;
+    }
+
+
+    .performance-table tbody td {
+        padding: 14px 15px;
+
+        vertical-align: middle;
+
+        color: #475569;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    .performance-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    .doctor-id {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 34px;
+        height: 34px;
+
+        border-radius: 50%;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        font-weight: 700;
+    }
+
+
+    .recovery-rate {
+        display: inline-block;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        background: #e9f8f0;
+
+        color: #198754;
+
+        font-weight: 600;
+
+        font-size: 0.8rem;
+    }
+
+
+    /* ==============================
+       EMPTY PERFORMANCE
+    ============================== */
+
+    .performance-empty {
+        text-align: center;
+
+        padding: 30px;
+
+        color: #94a3b8;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        .analytics-header {
+            align-items: flex-start;
+        }
+
+
+        .chart-container {
+            height: 260px;
+        }
+
+    }
+
+</style>
+
+
+<div class="analytics-page">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="analytics-header">
+
+        <div class="analytics-header-icon">
+
+            <i class="bi bi-bar-chart-line-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Hospital Analytics
+            </h2>
+
+            <p>
+                Treatment outcomes, appointment trends and hospital performance
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         SUMMARY CARDS
+    ============================== -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- TOTAL APPOINTMENTS -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="summary-card">
+
+                <div class="summary-card-inner">
+
+                    <div class="summary-icon blue">
+
+                        <i class="bi bi-calendar-check-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="summary-label">
+                            Total Appointments
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="totalAppointments"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOVERED -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="summary-card">
+
+                <div class="summary-card-inner">
+
+                    <div class="summary-icon green">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="summary-label">
+                            Recovered
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="recoveredCount"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- UNDER TREATMENT -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="summary-card">
+
+                <div class="summary-card-inner">
+
+                    <div class="summary-icon orange">
+
+                        <i class="bi bi-clock-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="summary-label">
+                            Under Treatment
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="treatmentCount"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CRITICAL -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="summary-card">
+
+                <div class="summary-card-inner">
+
+                    <div class="summary-icon red">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="summary-label">
+                            Critical
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="criticalCount"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         CHARTS
+    ============================== -->
+
+    <div class="row g-4">
+
+
+        <!-- STATUS -->
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <div class="chart-icon">
+
+                        <i class="bi bi-pie-chart-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5 class="chart-title">
+                            Status Distribution
+                        </h5>
+
+                        <p class="chart-subtitle">
+                            Current treatment status
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="statusChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIAGNOSIS -->
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <div class="chart-icon">
+
+                        <i class="bi bi-clipboard2-pulse-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5 class="chart-title">
+                            Common Diagnoses
+                        </h5>
+
+                        <p class="chart-subtitle">
+                            Most frequently recorded diagnoses
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="diagnosisChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOVERY -->
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <div class="chart-icon">
+
+                        <i class="bi bi-heart-pulse-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5 class="chart-title">
+                            Average Recovery Time
+                        </h5>
+
+                        <p class="chart-subtitle">
+                            Average recovery days by diagnosis
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="recoveryChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRENDS -->
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <div class="chart-icon">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5 class="chart-title">
+                            Appointment Trends
+                        </h5>
+
+                        <p class="chart-subtitle">
+                            Appointments over time
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="trendChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         DOCTOR PERFORMANCE
+    ============================== -->
+
+    <div class="performance-card">
+
+        <div class="performance-header">
+
+            <div class="performance-icon">
+
+                <i class="bi bi-person-badge-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h5 class="performance-title">
+                    Doctor Performance
+                </h5>
+
+                <p class="performance-subtitle">
+                    Treatment and recovery performance by doctor
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table performance-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Doctor
+                        </th>
+
+                        <th>
+                            Patients Treated
+                        </th>
+
+                        <th>
+                            Recovered
+                        </th>
+
+                        <th>
+                            Recovery Rate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="performanceBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     CHART.JS
+============================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+fetch("/api/analytics")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+
+        /* =================================
+           SUMMARY VALUES
+        ================================= */
+
+        const statusData = data.status_distribution || {};
+
+        const recovered =
+            statusData["Recovered"] || 0;
+
+        const treatment =
+            statusData["Under Treatment"] || 0;
+
+        const critical =
+            statusData["Critical"] || 0;
+
+
+        const totalAppointments =
+            Object.values(statusData)
+                .reduce(
+                    (sum, value) => sum + value,
+                    0
+                );
+
+
+        document.getElementById(
+            "totalAppointments"
+        ).textContent = totalAppointments;
+
+
+        document.getElementById(
+            "recoveredCount"
+        ).textContent = recovered;
+
+
+        document.getElementById(
+            "treatmentCount"
+        ).textContent = treatment;
+
+
+        document.getElementById(
+            "criticalCount"
+        ).textContent = critical;
+
+
+        /* =================================
+           DEFAULT CHART OPTIONS
+        ================================= */
+
+        const commonOptions = {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    labels: {
+
+                        padding: 18,
+
+                        usePointStyle: true
+
+                    }
+
+                }
+
+            }
+
+        };
+
+
+        /* =================================
+           STATUS DISTRIBUTION
+        ================================= */
+
+        new Chart(
+
+            document.getElementById("statusChart"),
+
+            {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels:
+                        Object.keys(
+                            data.status_distribution
+                        ),
+
+                    datasets: [{
+
+                        data:
+                            Object.values(
+                                data.status_distribution
+                            ),
+
+                        backgroundColor: [
+                            "#198754",
+                            "#f59f00",
+                            "#dc3545"
+                        ],
+
+                        borderWidth: 3,
+
+                        borderColor: "#ffffff"
+
+                    }]
+
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    cutout: "62%"
+
+                }
+
+            }
+
+        );
+
+
+        /* =================================
+           COMMON DIAGNOSES
+        ================================= */
+
+        new Chart(
+
+            document.getElementById("diagnosisChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels:
+                        Object.keys(
+                            data.most_common_diagnoses
+                        ),
+
+                    datasets: [{
+
+                        label: "Appointments",
+
+                        data:
+                            Object.values(
+                                data.most_common_diagnoses
+                            ),
+
+                        backgroundColor: "#0d6efd",
+
+                        borderRadius: 7,
+
+                        borderSkipped: false
+
+                    }]
+
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                precision: 0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+
+        /* =================================
+           RECOVERY TIME
+        ================================= */
+
+        new Chart(
+
+            document.getElementById("recoveryChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels:
+                        Object.keys(
+                            data.average_recovery_time_days
+                        ),
+
+                    datasets: [{
+
+                        label:
+                            "Average Recovery Days",
+
+                        data:
+                            Object.values(
+                                data.average_recovery_time_days
+                            ),
+
+                        backgroundColor: "#198754",
+
+                        borderRadius: 7,
+
+                        borderSkipped: false
+
+                    }]
+
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+
+        /* =================================
+           APPOINTMENT TRENDS
+        ================================= */
+
+        new Chart(
+
+            document.getElementById("trendChart"),
+
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels:
+                        Object.keys(
+                            data.appointment_trends
+                        ),
+
+                    datasets: [{
+
+                        label: "Appointments",
+
+                        data:
+                            Object.values(
+                                data.appointment_trends
+                            ),
+
+                        borderColor: "#0d6efd",
+
+                        backgroundColor:
+                            "rgba(13, 110, 253, 0.10)",
+
+                        fill: true,
+
+                        tension: 0.35,
+
+                        pointRadius: 5,
+
+                        pointHoverRadius: 7
+
+                    }]
+
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                precision: 0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+
+        /* =================================
+           DOCTOR PERFORMANCE
+        ================================= */
+
+        const performanceBody =
+            document.getElementById(
+                "performanceBody"
+            );
+
+
+        const performance =
+            data.doctor_performance || [];
+
+
+        if (performance.length === 0) {
+
+            performanceBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="performance-empty"
+                    >
+
+                        No doctor performance data available.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        } else {
+
+            performance.forEach(doctor => {
+
+                performanceBody.innerHTML += `
+
+                    <tr>
+
+                        <td>
+
+                            <span class="doctor-id">
+
+                                #${doctor.doctor_id}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${doctor.patients_treated}
+
+                        </td>
+
+
+                        <td>
+
+                            ${doctor.recovered}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="recovery-rate">
+
+                                ${doctor.recovery_rate}%
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Analytics loading error:",
+            error
+        );
+
+    });
+
+</script>
+
+
+{% endblock %}
